@@ -2,12 +2,12 @@ const { Session } = require('../models/boardModel')
 const sessionController = {}
 
 
-sessionController.startSession =  (req, res, next) => {
-     Session.findOne({cookieId: res.locals.id}, async (err,result)=>{
+sessionController.startSession = (req, res, next) => {
+     Session.findOne({cookieId: res.locals.id},  (err,result)=>{
         if(result){
             return next();
         } else{
-            await Session.create({cookieId: res.locals.id}, (err, session) => {
+            Session.create({cookieId: res.locals.id}, (err, session) => {
                 if(err){
                     res.send("error", err);
                 } else {
@@ -19,10 +19,11 @@ sessionController.startSession =  (req, res, next) => {
     })
 }
 
-sessionController.verifySession = async (req, res, next) => {
+sessionController.verifySession = (req, res, next) => {
     console.log("verifying session")
     console.log(req.cookies.ssid)
-    await Session.findOne({cookieId: req.cookies.ssid}, (err,result)=>{
+    if(!req.cookies.ssid) res.locals.isLoggedIn = false;
+    Session.findOne({cookieId: req.cookies.ssid}, (err,result)=>{
         // console.log(result)
         if(result){
             res.locals.isLoggedIn = true

@@ -21,10 +21,10 @@ const Board = (props) => {
   //when you click on board thumbnail, rout to BoardPage, and send board ID number to boardpage
 
 
-
+  console.log(props)
   return(
       <div className="board-component" >
-        <Link className='board-component-link' to={`/board/${props.board}`} activeclassname="current">{props.board}</Link>
+        <Link className='board-component-link' to={`/board/${props.id}`} id={props.id} activeclassname="current">{props.board}</Link>
       </div>
   
   );

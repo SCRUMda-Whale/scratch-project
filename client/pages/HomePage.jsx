@@ -8,8 +8,8 @@ import '../scss/HomePage.scss';
 const HomePage = () => {
 
   const [board, setBoard] = useState("");
-  const [boardList, setBoardList] = useState([{_id: "6098502bae5100bb913e", title: "chris", __v: 0}]);
-
+  const [boardList, setBoardList] = useState([]);
+  
   const history = useHistory()
 
   console.log("BOARD", boardList)
@@ -33,9 +33,10 @@ const HomePage = () => {
     fetch('/api')
     .then(res => res.json())
     .then(res => {
-      console.log(res)
+      console.log("useeffect", res)
       if(!res.isLoggedIn) {
-        history.push('/landing')
+        console.log("isLoggedIn?", res.isLoggedIn)
+      
       } else{
       setBoardList([...boardList, ...res.boards]);
       }
@@ -52,7 +53,7 @@ const HomePage = () => {
     <div className="homePage">
       <h1>Project Boards</h1>
       <div className="board-container">
-      {boardList.map((board, i) => <Board key={`card${i}`} board={board.title} />)}
+      {boardList.map((board, i) => <Board key={`card${i}`} id={board._id} board={board.title} />)}
       </div>
 
       <div className="inputBox">

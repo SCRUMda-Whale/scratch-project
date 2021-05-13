@@ -3,24 +3,11 @@ const path = require('path');
 const apiRouter = require('./routes/api');
 const userRouter = require('./routes/userRouter')
 const cookieParser = require('cookie-parser')
-const sessionController = require('./controllers/sessionController')
+
 //const cors = require('cors')
 
 const app = express();
 const PORT = 3000;
-
-
-// connect to MongoDB
-const mongoose = require('mongoose');
-
-const MONGO_URL = 'mongodb+srv://Scrum:Scrum@cluster0.s7gz7.mongodb.net/Cluster0?retryWrites=true&w=majority'
-
-mongoose.connect(MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  dbName: "Scrum",
-}).then(() => { console.log('Connected to MongoDB') })
-  .catch(() => console.log('cannot connect to mongdb'));
 
 app.use(express.json());
 // app.use(express.urlencoded({extended: true}))
@@ -39,6 +26,8 @@ if (process.env.NODE_ENV == "production") {
     res.status(200).sendFile(path.join(__dirname, '../index.html'));
     })
 }
+
+
 
 
 

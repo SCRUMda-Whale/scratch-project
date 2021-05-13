@@ -26,7 +26,7 @@ router.delete('/', boardController.deleteBoard, (req, res) => {
 
 // route to the individual boards
 //middleware needed - addCard, getCards, deleteCard
-router.get('/:board', cardController.getCards, (req,res) => {
+router.get('/:id', cardController.getCards, (req,res) => {
     res.status(200).json(res.locals.cards);
 });
 

@@ -12,12 +12,24 @@ const Paper = styled.div`
   background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
 `;
 
-const BoardPage = () => {
+const BoardPage = (props) => {
 
-
+  
   // new state
   const [boardData, setBoardData] = useState(initialData);
 
+  const bID = window.location.href.slice(window.location.href.indexOf('d/') + 2);
+  let newData;
+  console.log(initialData)
+
+  useEffect(() => {
+    fetch(`/api/${bID}`)
+      .then(res => res.json())
+      .then(data => {
+        setBoardData(data);
+      })
+      .catch(err => console.log(err))
+  }, [])
 
   const addThings = (e) => {
     console.log(e.ref)
