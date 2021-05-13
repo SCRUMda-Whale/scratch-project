@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Switch, Route, Link, useHistory } from 'react-
 import BoardPage from './BoardPage';
 import Board from '../components/Board';
 import '../scss/HomePage.scss';
-// displays boardcards (for each user if using login)
-// navigation page to individual scrum boards
+
 
 const HomePage = () => {
 
   const [board, setBoard] = useState("");
-  const [boardList, setBoardList] = useState([]);
+  const [boardList, setBoardList] = useState([{_id: "6098502bae5100bb913e", title: "chris", __v: 0}]);
+
   const history = useHistory()
 
   console.log("BOARD", boardList)
@@ -57,7 +57,7 @@ const HomePage = () => {
 
       <div className="inputBox">
         <input value={board} type='text' onChange={e => setBoard(e.target.value)}></input>
-        <button onClick={saveBoardHandler}>Create New Board</button>
+        {/* <button onClick={saveBoardHandler}>Create New Board</button> */}
   
       </div>
       
