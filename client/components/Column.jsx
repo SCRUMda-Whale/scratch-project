@@ -6,16 +6,12 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 
 const Container = styled.div`
-  border: 1px solid lightgrey;
-  border-radius: 2px;
   padding: 8px;
   margin-bottom: 8px;
   background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
 `;
 
 const Paper = styled.div`
-  border: 1px solid lightgrey;
-  border-radius: 2px;
   padding: 8px;
   margin-bottom: 8px;
   background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
@@ -30,14 +26,19 @@ const Column = (props) =>{
   const columnRef = useRef(null)
 
   return(
-    <div >
-      <h1>{props.header}</h1>
-        <Droppable droppableId={props.column} key={props.column}>
+    <Draggable draggableId={props.column} index={props.index}>
+      {(provided) => (
+        <Paper
+        {...provided.draggableProps}
+        ref={provided.innerRef}
+        >
+      <h1 {...provided.dragHandleProps}>{props.header}</h1>
+        <Droppable droppableId={props.column} key={props.column} type="task">
           {(provided, snapshot) => (
             <Container className='taskList'
             ref={provided.innerRef}
             {...provided.droppableProps}
-              isDraggingOver={snapshot.isDraggingOver}
+            isDraggingOver={snapshot.isDraggingOver}
             >
 
 
@@ -45,7 +46,7 @@ const Column = (props) =>{
 
           {props.taskIds.map((task, index) => 
 
-        <Draggable key={task} draggableId={task} index={index}>
+<Draggable key={task} draggableId={task} index={index}>
            {(provided, snapshot) => (
              <Paper ref={columnRef}
              {...provided.draggableProps}
@@ -60,6 +61,8 @@ const Column = (props) =>{
              title={task} 
              taskId={task} 
              content={task}
+             updateContent={props.updateContent}
+             taskData={props.taskData}
              />
                 
                   </Paper>
@@ -73,9 +76,11 @@ const Column = (props) =>{
           {provided.placeholder}
       </Container>
         
-    )}
+        )}
     </Droppable>
-    </div>
+    </Paper>
+        )}
+        </Draggable>
   );
 };
 
