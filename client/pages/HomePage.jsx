@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from 'react-router-dom';
 import BoardPage from './BoardPage';
 import Board from '../components/Board';
 import '../scss/HomePage.scss';
@@ -10,6 +10,43 @@ const HomePage = () => {
   const [board, setBoard] = useState("");
   const [boardList, setBoardList] = useState([{_id: "6098502bae5100bb913e", title: "chris", __v: 0}]);
 
+  const history = useHistory()
+
+  console.log("BOARD", boardList)
+
+  const saveBoardHandler = () => {
+    //make post request to backend
+    //take the result and push it to boardlist
+    const newBoard = {title: board};
+    fetch('/api', {
+    method: 'POST',
+    headers:  { 'Content-Type': 'application/json'},
+    body: JSON.stringify(newBoard),
+    })
+      .then(data => data.json())
+      .then(res => setBoardList([...boardList, ...res]))
+    setBoard("");
+  }
+
+  useEffect(() => {
+    console.log("fetching boards")
+    fetch('/api')
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+      if(!res.isLoggedIn) {
+        history.push('/landing')
+      } else{
+      setBoardList([...boardList, ...res.boards]);
+      }
+    })
+    .catch(e => console.log(e));
+  }, []);
+  
+  
+  // res = [{_id: "6098502bae510d80bb913ee4", title: "Scrum Board", __v: 0}, {_id: "6098502bae510d80bb913ee4", title: "Scrum Board", __v: 0}, {_id: "6098502bae510d80bb913ee4", title: "Scrum Board", __v: 0}]
+  // cards for board components
+  // input box and a button
 
   return(
     <div className="homePage">
