@@ -1,6 +1,7 @@
 import React, { Component, useState, useRef } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import InputBase from '@material-ui/core/InputBase';
+import Fab from './Fab'
 
 
 const Card = (props) => {
@@ -15,6 +16,7 @@ const Card = (props) => {
         value={props.taskData[props.taskId].content}
         id={props.content}
         onChange={props.updateContent}
+        multiline={true}
       />
     </div>
 )}

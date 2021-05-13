@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import initialData from '../../initialData'
 import { DragDropContext, Droppable} from 'react-beautiful-dnd';
 import styled from 'styled-components';
+import InputBase from '@material-ui/core/InputBase';
 
 const Paper = styled.div`
   padding: 8px;
@@ -17,6 +18,11 @@ const BoardPage = () => {
   // new state
   const [boardData, setBoardData] = useState(initialData);
 
+
+  const addThings = (e) => {
+    console.log(e.ref)
+  }
+
   const updateContent = (e) => {
   //  console.log(e.target.value)
   //  console.log(boardData.tasks[e.target.id].content)
@@ -24,7 +30,6 @@ const BoardPage = () => {
    const value = e.target.value
   //  props.taskData[props.taskId].content
   const content = value
-  console.log(content)
    setBoardData({
      ...boardData,
      tasks: {
@@ -146,10 +151,17 @@ const BoardPage = () => {
           taskIds={boardData.columns[column].taskIds}
           updateContent={updateContent}
           taskData={boardData.tasks}
+          addThings={addThings}
           >
           </Column>
         })}
         {provided.placeholder}
+        <InputBase
+// className={classes.margin}
+inputProps={{ 'aria-label': 'naked' }}
+placeholder='Add a new column'
+style={{alignSelf:'flex-start'}}
+/>
       </Paper>
         )}
       </Droppable>

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import Card from './Card';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import Fab from './Fab'
+import InputBase from '@material-ui/core/InputBase';
 
 
 const Container = styled.div`
@@ -26,6 +28,9 @@ const Column = (props) =>{
   const columnRef = useRef(null)
 
   return(
+    <div>
+
+    
     <Draggable draggableId={props.column} index={props.index}>
       {(provided) => (
         <Paper
@@ -65,6 +70,7 @@ const Column = (props) =>{
              taskData={props.taskData}
              />
                 
+            
                   </Paper>
                   )}
                   </Draggable>
@@ -81,6 +87,12 @@ const Column = (props) =>{
     </Paper>
         )}
         </Draggable>
+<InputBase
+// className={classes.margin}
+inputProps={{ 'aria-label': 'naked' }}
+placeholder='Add a new card'
+/>
+</div>
   );
 };
 
