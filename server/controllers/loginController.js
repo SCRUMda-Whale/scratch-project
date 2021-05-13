@@ -34,7 +34,7 @@ const loginController = {
     // console.log("in logincontroller for login user", req)
    //console.log(req)
     const {username, password} = req.body
-    Users.findOne({username: username})
+     Users.findOne({username: username})
         .then(user => {
             if(user){
                 console.log("user exists")
@@ -43,7 +43,7 @@ const loginController = {
                     console.log("bcrypt compared done")
                     if(result){
                     res.locals.id = user.id.toString();
-                    console.log("data sent to next middle ware", res.locals.id)
+                    console.log("data sent to next middle ware", res.locals.id);
                     next();
                     }
                     else {

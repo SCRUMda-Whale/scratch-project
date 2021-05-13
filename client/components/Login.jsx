@@ -29,7 +29,7 @@ const Login = ({ setRegisteringState }) => {
         body: JSON.stringify(user)
       })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => console.log("fetch after login", data))
         .then(history.push('/'))
         .catch(err => console.log(err))
     }

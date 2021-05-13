@@ -1,4 +1,7 @@
 const { Cards } = require('../models/boardModel');
+const { NewBoards } = require('../models/boardModel');
+const { deleteBoard } = require('./boardController');
+const { db } = require('../models/boardModel')
 
 const cardController = {};
 
@@ -15,9 +18,17 @@ cardController.addCard = (req, res, next) => {
 
 
 cardController.getCards = (req, res, next) => {
-    Cards.find({ boardID: req.params.board }, (err, cards) => {
+    console.log("in cardController.getCards")
+    console.log(req.params.id)
+    
+    NewBoards.find((err, cards) => {
         if (err) next({status: 400});
-        res.locals.cards = cards;
+        console.log("after newboards.find", cards)
+        const newCards = cards.filter(obj =>{
+            return obj.boardID === req.params.id;
+        })
+        console.log(newCards)
+        res.locals.cards = newCards[0];
         next();
     });
 };

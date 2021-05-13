@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 
 const MONOG_URL = 'mongodb+srv://Scrum:Scrum@cluster0.s7gz7.mongodb.net/Cluster0?retryWrites=true&w=majority'
 
-mongoose.connect(MONOG_URL, {
+const db = mongoose.connect(MONOG_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   dbName: "Scrum",
@@ -62,8 +62,20 @@ const userSchema = new Schema({
 
 const sessionSchema = new Schema({
   cookieId: {type: String, required: true, unique: true},
-  createdAt: {type: Date, expires: 45, default: Date.now}
+  createdAt: {type: Date, expires: 1000, default: Date.now}
 })
+
+const newBoardsSchema = new Schema({
+  tasks: {},
+  columns: {},
+  columnOrder: [],
+  boardID: String
+  },
+  {
+    collection: 'newboards'
+  }
+)
+
 
 userSchema.pre('save', async function(next){
   const user = this;
@@ -76,11 +88,14 @@ const Users = mongoose.model('users', userSchema);
 const Cards = mongoose.model('cards', cardSchema);
 const Boards = mongoose.model('boards', boardSchema);
 const Session = mongoose.model('Session', sessionSchema)
+const NewBoards = mongoose.model('newboards' , newBoardsSchema)
 
 
 module.exports = {
+  db,
   Users,
   Cards,
   Boards,
-  Session
+  Session,
+  NewBoards
 }

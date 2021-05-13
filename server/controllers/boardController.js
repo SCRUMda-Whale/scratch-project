@@ -23,6 +23,7 @@ boardController.getBoards = (req, res, next) => {
             })
         }else{
             console.log(err)
+            next();
         }
     })
     // console.log(result)

@@ -66,7 +66,7 @@ const App = props => {
                    
                 </Route>  
                 
-                <Route exact path="/board/:board">
+                <Route exact path="/board/:id">
                 <Navigation/>
                     <BoardPage/>
                    
