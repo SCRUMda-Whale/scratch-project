@@ -23,12 +23,14 @@ const BoardPage = () => {
    const key = e.target.id
    const value = e.target.value
   //  props.taskData[props.taskId].content
-  const content = boardData.tasks[e.target.id].content + value
+  const content = value
   console.log(content)
    setBoardData({
      ...boardData,
      tasks: {
+       ...boardData.tasks,
        [key]:{
+         id: key,
          content: content
        }
    },
